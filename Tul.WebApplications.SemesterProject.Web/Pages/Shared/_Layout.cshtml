@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - MojeApp</title>
+    @*<link rel="stylesheet" href="/css/site.css" />*@
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="flex flex-col min-h-screen bg-gray-900 text-white">
+    <header class="w-full border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+            <!-- Left section -->
+            <div class="flex items-center space-x-6">
+                <a href="#" class="flex items-center space-x-2">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" class="h-5" alt="Microsoft Logo">
+                    <span class="font-semibold">Microsoft</span>
+                </a>
+                <div class="h-5 border-l border-gray-600"></div>
+                <a href="#" class="text-white font-bold">.NET</a>
+                <nav class="hidden md:flex space-x-4 text-sm">
+                    <a href="#" class="hover:text-gray-300">Why .NET</a>
+                    <a href="#" class="hover:text-gray-300">Features</a>
+                    <a href="#" class="hover:text-gray-300">Learn</a>
+                    <a href="#" class="hover:text-gray-300">Docs</a>
+                    <a href="#" class="hover:text-gray-300">Downloads</a>
+                    <a href="#" class="hover:text-gray-300">Community</a>
+                    <a href="#" class="border border-white px-2 py-0.5 rounded text-xs hover:bg-white hover:text-black transition">LIVE TV</a>
+                </nav>
+            </div>
+
+            <!-- Right section -->
+            <div class="flex items-center space-x-4 text-sm">
+                <div class="relative group">
+                    <button class="hover:text-gray-300">All Microsoft</button>
+                </div>
+                <button class="hover:text-gray-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile navigation -->
+    <div id="nav-mobile" class="md:hidden hidden px-4 pb-4 space-y-2 text-sm">
+        <a href="#" class="block hover:text-gray-300">Why .NET</a>
+        <a href="#" class="block hover:text-gray-300">Features</a>
+        <a href="#" class="block hover:text-gray-300">Learn</a>
+        <a href="#" class="block hover:text-gray-300">Docs</a>
+        <a href="#" class="block hover:text-gray-300">Downloads</a>
+        <a href="#" class="block hover:text-gray-300">Community</a>
+        <a href="#" class="block border border-white px-2 py-1 rounded text-xs hover:bg-white hover:text-black transition">LIVE TV</a>
+    </div>
+
+
+    <main class="flex-grow p-4">
+        @RenderBody()
+    </main>
+
+    <footer class="bg-gray-800 text-white p-4">
+        <p>&copy; 2025 - MojeApp</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const toggle = document.getElementById('nav-toggle');
+          const menu = document.getElementById('nav-mobile');
+          toggle.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+          });
+        });
+    </script>
+
+</body>
+</html>
