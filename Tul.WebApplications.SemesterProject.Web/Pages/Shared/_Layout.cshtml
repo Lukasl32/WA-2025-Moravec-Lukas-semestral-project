@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - MojeApp</title>
     @*<link rel="stylesheet" href="/css/site.css" />*@
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=download" />
 </head>
 <body class="flex flex-col min-h-screen bg-gray-900 text-white">
     <header class="w-full border-b border-gray-700">
@@ -13,47 +14,49 @@
             <!-- Left section -->
             <div class="flex items-center space-x-6">
                 <a href="#" class="flex items-center space-x-2">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" class="h-5" alt="Microsoft Logo">
-                    <span class="font-semibold">Microsoft</span>
+                    @*<img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" class="h-5" alt="Microsoft Logo">*@
+                    <span class="material-symbols-outlined">download</span>
+                    <span class="font-semibold">Collector</span>
                 </a>
                 <div class="h-5 border-l border-gray-600"></div>
-                <a href="#" class="text-white font-bold">.NET</a>
+                <a href="#" class="text-white font-bold">ASP.NET</a>
                 <nav class="hidden md:flex space-x-4 text-sm">
-                    <a href="#" class="hover:text-gray-300">Why .NET</a>
-                    <a href="#" class="hover:text-gray-300">Features</a>
-                    <a href="#" class="hover:text-gray-300">Learn</a>
-                    <a href="#" class="hover:text-gray-300">Docs</a>
-                    <a href="#" class="hover:text-gray-300">Downloads</a>
-                    <a href="#" class="hover:text-gray-300">Community</a>
-                    <a href="#" class="border border-white px-2 py-0.5 rounded text-xs hover:bg-white hover:text-black transition">LIVE TV</a>
+                    <a href="#" class="px-2 py-1 rounded hover:bg-gray-800 transition">Home</a>
+                    <a href="#" class="px-2 py-1 rounded hover:bg-gray-800 transition">Features</a>
+                    <a href="#" class="px-2 py-1 rounded hover:bg-gray-800 transition">Guide</a>
+                    <a href="#" class="px-2 py-1 rounded hover:bg-gray-800 transition">Docs</a>
+                    <a href="#" class="px-2 py-1 rounded hover:bg-gray-800 transition">Downloads</a>
                 </nav>
             </div>
 
             <!-- Right section -->
             <div class="flex items-center space-x-4 text-sm">
                 <div class="relative group">
-                    <button class="hover:text-gray-300">All Microsoft</button>
+                    @*<button class="hover:text-gray-300">All Microsoft</button>*@
                 </div>
+                <a href="#" class="border border-white px-2 py-0.5 rounded text-xs hover:bg-white hover:text-black transition">COLLECT</a>
                 <button class="hover:text-gray-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
                     </svg>
                 </button>
+
+                <!-- Avatar + Dropdown -->
+                <div class="relative">
+                    <button id="avatar-button" class="focus:outline-none">
+                        <img src="https://i.pravatar.cc/32" alt="Avatar"
+                             class="w-8 h-8 rounded-full border-2 border-gray-600 hover:border-white transition">
+                    </button>
+                    <div id="avatar-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-50">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profil</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Nastavení</a>
+                        <div class="border-t border-gray-200"></div>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Odhlásit se</a>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
-
-    <!-- Mobile navigation -->
-    <div id="nav-mobile" class="md:hidden hidden px-4 pb-4 space-y-2 text-sm">
-        <a href="#" class="block hover:text-gray-300">Why .NET</a>
-        <a href="#" class="block hover:text-gray-300">Features</a>
-        <a href="#" class="block hover:text-gray-300">Learn</a>
-        <a href="#" class="block hover:text-gray-300">Docs</a>
-        <a href="#" class="block hover:text-gray-300">Downloads</a>
-        <a href="#" class="block hover:text-gray-300">Community</a>
-        <a href="#" class="block border border-white px-2 py-1 rounded text-xs hover:bg-white hover:text-black transition">LIVE TV</a>
-    </div>
-
 
     <main class="flex-grow p-4">
         @RenderBody()
@@ -64,14 +67,27 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-          const toggle = document.getElementById('nav-toggle');
+        /*
+        // Pokus o responzivní MENU (nefunkční!!)
+        document.getElementById('nav-toggle').addEventListener('click', function () {
           const menu = document.getElementById('nav-mobile');
-          toggle.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-          });
+          menu.classList.toggle('hidden');
+        });*/
+
+        // Přepínání dropdown menu u avatara
+        document.getElementById('avatar-button').addEventListener('click', function (e) {
+            e.stopPropagation(); // Zabrání zavření hned po otevření
+            const dropdown = document.getElementById('avatar-dropdown');
+            dropdown.classList.toggle('hidden');
+        });
+
+        // Kliknutí mimo zavře dropdown
+        document.addEventListener('click', function (e) {
+            const dropdown = document.getElementById('avatar-dropdown');
+            if (!dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+            }
         });
     </script>
-
 </body>
 </html>
