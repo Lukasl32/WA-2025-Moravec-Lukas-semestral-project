@@ -13,6 +13,29 @@ public class User
     public required string Email { get; set; } = string.Empty;
     public SecureString Token { get; set; } = new SecureString(); // Use SecureString for sensitive data like tokens
 
+    public static async Task<User> RegisterAsync(string username, string email, string password)
+    {
+        var role = (int)Enums.Role.User; // Default role for new users
+
+        using var connection = new MySqlConnection(Program.DB);
+        await connection.OpenAsync();
+        using var command = new MySqlCommand("INSERT INTO users(id, userName, email, passwordHash, role) VALUES ('@id','@userName','@email','@passwordHash','@role')", connection);
+        command.Parameters.AddWithValue("@id", Guid.NewGuid());
+        command.Parameters.AddWithValue("@userName", username);
+        command.Parameters.AddWithValue("@email", email);
+        command.Parameters.AddWithValue("@passwordHash", Argon2.Hash(password)); // Hash the password using Argon2
+        command.Parameters.AddWithValue("@role", role);
+        var status = await command.ExecuteNonQueryAsync();
+        if(status != 1)
+            throw new Exception("User registration failed. Please try again.");
+        return new User
+        {
+            Id = Guid.NewGuid(), // This should be replaced with the actual ID from the database after insertion
+            Username = username,
+            Email = email
+        };
+    }
+
     public static async Task<User?> Login(string email, string password, ISession? session = null)
     {
         using var connection = new MySqlConnection(Program.DB);
