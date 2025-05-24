@@ -5,10 +5,18 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        var configuration = builder.Configuration;
-        DB = configuration.GetConnectionString("Database:TestDB") ?? throw new InvalidOperationException("Connection string not found.");
+        var configuration = builder.Configuration; // Access the configuration object to retrieve settings
+        DB = configuration["Database:TestDB"] ?? throw new InvalidOperationException("Connection string not found.");
 
         builder.Services.AddRazorPages();
+
+        builder.Services.AddDistributedMemoryCache(); // Add in-memory cache for session storage
+        builder.Services.AddSession(options =>
+        {
+            options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout to 30 minutes
+            options.Cookie.HttpOnly = true; // Make the session cookie HTTP-only
+            options.Cookie.IsEssential = true; // Make the session cookie essential for the application
+        });
 
         var app = builder.Build();
 
@@ -19,9 +27,11 @@ internal class Program
             app.UseHsts();
         }
 
-        app.UseRouting();
-        app.MapStaticAssets();
-        app.MapRazorPages();
+        app.UseRouting(); // Enable routing middleware
+        app.MapStaticAssets(); // Map static assets to the app
+        app.MapRazorPages(); // Map Razor pages to the app
+
+        app.UseSession(); // Enable session middleware
 
         app.Run();
     }
