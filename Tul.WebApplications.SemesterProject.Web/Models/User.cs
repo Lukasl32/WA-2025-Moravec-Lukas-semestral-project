@@ -63,4 +63,19 @@ public class User
         }
         return null; // Return null if user not found
     }
+
+    public User GetById(Guid userId)
+    {
+        throw new NotImplementedException("GetUser logic is not implemented yet.");
+    }
+    
+    public User GetByEmail(string email)
+    {
+        throw new NotImplementedException("GetUserByEmail logic is not implemented yet.");
+    }
+
+    public User GetByToken(SecureString token)
+    {
+        throw new NotImplementedException("GetUserByToken logic is not implemented yet.");
+    }
 }
