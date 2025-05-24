@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@{
+    var _token = Context.Session.GetString("token");
+}
+<!DOCTYPE html>
 <html lang="cs">
 <head>
     <meta charset="utf-8" />
@@ -43,10 +47,15 @@
                              class="w-8 h-8 rounded-full border-2 border-gray-600 hover:border-white transition">
                     </button>
                     <div id="avatar-dropdown" class="hidden absolute right-0 mt-2 w-48 bg-white text-black rounded shadow-lg z-50">
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profil</a>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Nastavení</a>
+                        @if (_token is not null)
+                        {
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Settings</a>
                         <div class="border-t border-gray-200"></div>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Odhlásit se</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Log out</a>
+                        } else {
+                            <a href="/user/login" class="block px-4 py-2 hover:bg-gray-100">Log in</a>
+                        }
                     </div>
                 </div>
             </div>
