@@ -14,13 +14,13 @@ public class Token
     {
         using var connection = new MySqlConnection(Program.DB);
         await connection.OpenAsync();
-        using var command = new MySqlCommand("INSERT INTO tokens(id, hash, user_id) VALUES ('@id','@hash','@user_id')", connection);
+        using var command = new MySqlCommand("INSERT INTO tokens(id, hash, user_id) VALUES (@id,@hash,@user_id)", connection);
         command.Parameters.AddWithValue("@id", Guid.NewGuid());
         command.Parameters.AddWithValue("@hash", GenerateHash(256)); // Placeholder for hash, to be replaced with actual hash generation logic
         command.Parameters.AddWithValue("@user_id", userId);
         await command.ExecuteNonQueryAsync();
 
-        using var command2 = new MySqlCommand("SELECT * FROM tokens ORDER BY id DESC WHERE user_id = @user_id LIMIT 1", connection);
+        using var command2 = new MySqlCommand("SELECT * FROM tokens WHERE user_id = @user_id ORDER BY id DESC LIMIT 1;", connection);
         command2.Parameters.AddWithValue("@user_id", userId);
         using var reader = await command2.ExecuteReaderAsync();
         if (await reader.ReadAsync())

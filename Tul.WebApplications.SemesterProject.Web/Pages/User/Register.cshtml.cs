@@ -49,6 +49,8 @@ namespace Tul.WebApplications.SemesterProject.Web.Pages.User
             {
                 var user = await Models.User.RegisterAsync(user_nickname!, user_email!, user_password!, (user_admin ? Role.Admin : Role.User));
                 // Optionally, you can set the session or redirect to a login page
+                TempData["email"] = user_email; // data pass to next page
+
                 return RedirectToPage("/user/login");
             }
             catch (Exception ex)

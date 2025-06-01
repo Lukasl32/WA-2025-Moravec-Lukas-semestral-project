@@ -39,7 +39,7 @@ public class User
         };
     }
 
-    public static async Task<User?> Login(string email, string password, ISession? session = null)
+    public static async Task<SecureString?> Login(string email, string password)
     {
         using var connection = new MySqlConnection(Program.DB);
         await connection.OpenAsync();
@@ -56,13 +56,7 @@ public class User
             if (!Argon2.Verify(passwordHash, password))
                 return null; // Return null if password does not match
 
-            var user = new User
-            {
-                Id = userId,
-                Username = username,
-                Email = email,
-                Token = (await Models.Token.Generate(userId)).Hash // Initialize SecureString for token
-            };
+            return (await Models.Token.Generate(userId)).Hash; // Initialize SecureString for token
         }
         return null; // Return null if user not found
     }

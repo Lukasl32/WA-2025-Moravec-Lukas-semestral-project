@@ -3,7 +3,7 @@
 @{
 }
 <div class="max-w-3/4 w-250 w-50em p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 content-stretch">
-    <form action="/" method="post">
+    <form method="post">
         <div class="grid gap-6 mb-6 md:grid-cols-2 grid-rows-3 items-stretch">
             <div class="col-span-2">
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Sign in to your account:</h5>
@@ -11,17 +11,17 @@
             </div>
             <div class="col-span-2">
                 <label for="user_email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">E-mail:</label>
-                <input type="text" id="user_email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="lukas.moravec@tul.cz" required />
+                <input type="text" id="user_email" asp-for="user_email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="lukas.moravec@tul.cz" />
+                <span asp-validation-for="user_email" class="mt-2 text-sm text-red-600 dark:text-red-500"></span>
             </div>
             <div class="col-span-2">
-                <label for="user_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Passwod:</label>
-                <input type="password" id="user_password"" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••">
+                <label for="user_password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password:</label>
+                <input type="password" id="user_password" asp-for="user_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="••••••••">
+                <span asp-validation-for="user_password" class="mt-2 text-sm text-red-600 dark:text-red-500"></span>
             </div>
         </div>
-        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-    </form>
 
-    @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
-    }
+        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+        <span asp-validation-for="login_error" class="mt-2 mb-1 text-sm text-red-600 dark:text-red-500"></span>
+    </form>
 </div>
