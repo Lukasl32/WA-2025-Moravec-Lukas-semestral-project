@@ -4,6 +4,8 @@ using Isopoh.Cryptography.Argon2;
 
 using MySqlConnector;
 
+using Tul.WebApplications.SemesterProject.Web.Enums;
+
 namespace Tul.WebApplications.SemesterProject.Web.Models;
 
 public class User
@@ -13,24 +15,25 @@ public class User
     public required string Email { get; set; } = string.Empty;
     public SecureString Token { get; set; } = new SecureString(); // Use SecureString for sensitive data like tokens
 
-    public static async Task<User> RegisterAsync(string username, string email, string password)
+    public static async Task<User> RegisterAsync(string username, string email, string password, Role role = Role.User)
     {
-        var role = (int)Enums.Role.User; // Default role for new users
-
         using var connection = new MySqlConnection(Program.DB);
         await connection.OpenAsync();
-        using var command = new MySqlCommand("INSERT INTO users(id, userName, email, passwordHash, role) VALUES ('@id','@userName','@email','@passwordHash','@role')", connection);
-        command.Parameters.AddWithValue("@id", Guid.NewGuid());
+        using var command = new MySqlCommand("INSERT INTO users(id, userName, email, passwordHash, role) VALUES (@id,@userName,@email,@passwordHash,@role)", connection);
+
+        var _userId = Guid.NewGuid(); // Generate a new GUID for the user ID
+        command.Parameters.AddWithValue("@id", _userId);
         command.Parameters.AddWithValue("@userName", username);
         command.Parameters.AddWithValue("@email", email);
         command.Parameters.AddWithValue("@passwordHash", Argon2.Hash(password)); // Hash the password using Argon2
-        command.Parameters.AddWithValue("@role", role);
+        command.Parameters.AddWithValue("@role", (int)role);
         var status = await command.ExecuteNonQueryAsync();
-        if(status != 1)
+
+        if(status < 1)
             throw new Exception("User registration failed. Please try again.");
         return new User
         {
-            Id = Guid.NewGuid(), // This should be replaced with the actual ID from the database after insertion
+            Id = _userId,
             Username = username,
             Email = email
         };
