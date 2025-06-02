@@ -8,7 +8,7 @@ namespace Tul.WebApplications.SemesterProject.Web.Models;
 public class Token
 {
     public required Guid Id { get; set; }
-    public required SecureString Hash { get; set; }
+    public required string Hash { get; set; }
 
     public async static Task<Token> Generate(Guid userId)
     {
@@ -28,12 +28,8 @@ public class Token
             var token = new Token
             {
                 Id = reader.GetGuid("id"),
-                Hash = new SecureString()
+                Hash = reader.GetString("hash")
             };
-            // Convert the hash string to SecureString
-            foreach (char c in reader.GetString("hash"))
-                token.Hash.AppendChar(c);
-            token.Hash.MakeReadOnly(); // Make the SecureString read-only for security
             return token;
         }
 
