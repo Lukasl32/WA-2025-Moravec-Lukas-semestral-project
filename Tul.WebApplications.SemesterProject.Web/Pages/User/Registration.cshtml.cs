@@ -10,7 +10,7 @@ using Tul.WebApplications.SemesterProject.Web.Enums;
 
 namespace Tul.WebApplications.SemesterProject.Web.Pages.User
 {
-    public class RegisterModel : PageModel
+    public class RegistrationModel : PageModel
     {
         [BindProperty]
         public string? user_nickname { get; set; }
@@ -47,7 +47,7 @@ namespace Tul.WebApplications.SemesterProject.Web.Pages.User
                 return Page();
             try
             {
-                var user = await Models.User.RegisterAsync(user_nickname!, user_email!, user_password!, (user_admin ? Role.Admin : Role.User));
+                var user = await Models.UserModel.RegisterAsync(user_nickname!, user_email!, user_password!, (user_admin ? Role.Admin : Role.User));
                 // Optionally, you can set the session or redirect to a login page
                 TempData["email"] = user_email; // data pass to next page
 
