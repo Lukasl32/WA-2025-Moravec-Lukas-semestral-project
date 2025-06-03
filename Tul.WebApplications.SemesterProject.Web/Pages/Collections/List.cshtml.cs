@@ -9,7 +9,7 @@ namespace Tul.WebApplications.SemesterProject.Web.Pages.Collections
 {
     public class ListModel : PageModel
     {
-        public List<Collection> GeneratedItems { get; set; } // Replace YourItemModel with your actual model
+        public List<Collection> GeneratedItems { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {

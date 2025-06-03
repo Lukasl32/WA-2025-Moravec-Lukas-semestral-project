@@ -7,7 +7,7 @@ namespace Tul.WebApplications.SemesterProject.Web.Pages.Collections
 {
     public class DetailModel : PageModel
     {
-        public List<Picture> GeneratedItems { get; set; } // Replace YourItemModel with your actual model
+        public List<Picture> GeneratedItems { get; set; }
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
             var _collectionId = id;

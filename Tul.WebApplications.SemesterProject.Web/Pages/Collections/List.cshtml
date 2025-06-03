@@ -10,7 +10,7 @@
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Your collection</h2>
         <table class="p-15 table-auto border border-collapse border-gray-400">
             <thead>
-                <tr >
+                <tr>
                     @if (Role.Admin == await UserModel.GetRoleById((Guid)await UserModel.GetIdByTokenAsync(HttpContext.Session.GetString("token")!)))
                     {
                         <th class="pt-5 pb-2 px-2 py-1">
@@ -30,18 +30,21 @@
                 @foreach (var item in Model.GeneratedItems)
                 {
                     <tr>
-                        @if (Role.Admin == await UserModel.GetRoleById((Guid)await UserModel.GetIdByTokenAsync(HttpContext.Session.GetString("token")!)))
-                            {
-                                <td class="px-2 py-1">
-                                    @Html.DisplayFor(modelItem => item.Id)
-                                </td>
-                            }
                         <td class="px-2 py-1 font-bold">
                             @Html.DisplayFor(modelItem => item.Title)
                         </td>
                         <td class="px-2 py-1">
                             @Html.DisplayFor(modelItem => item.Created)
                         </td>
+                        @if (Role.Admin == await UserModel.GetRoleById((Guid)await UserModel.GetIdByTokenAsync(HttpContext.Session.GetString("token")!)))
+                        {
+                            <td class="px-2 py-1">
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td class="px-2 py-1">
+                                @Html.DisplayFor(modelItem => item.Created)
+                            </td>
+                        }
                         <td class="px-2 py-1">
                             <a asp-page="./edit" asp-route-id="@item.Id">Edit</a> |
                             <a asp-page="./detail" asp-route-id="@item.Id">Details</a> |
