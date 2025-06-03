@@ -11,18 +11,21 @@
         <table class="p-15 table-auto border border-collapse border-gray-400">
             <thead>
                 <tr>
-                    @if (Role.Admin == await UserModel.GetRoleById((Guid)await UserModel.GetIdByTokenAsync(HttpContext.Session.GetString("token")!)))
-                    {
-                        <th class="pt-5 pb-2 px-2 py-1">
-                            Id
-                        </th>
-                    }
                     <th class="pt-4 pb-2 px-2 py-1">
                         Title
                     </th>
                     <th class="pt-4 pb-2 px-2 py-1">
                         Created
                     </th>
+                    @if (Role.Admin == await UserModel.GetRoleById((Guid)await UserModel.GetIdByTokenAsync(HttpContext.Session.GetString("token")!)))
+                    {
+                        <th class="pt-5 pb-2 px-2 py-1">
+                            Id
+                        </th>
+                        <th class="pt-5 pb-2 px-2 py-1">
+                            Created
+                        </th>
+                    }
                     <th></th>
                 </tr>
             </thead>
