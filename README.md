@@ -1,0 +1,1 @@
+# WA-2025-Moravec-Lukas-semestral-project
