@@ -10,7 +10,8 @@
     <title>@ViewData["Title"] - Atheris Collector</title>
     @*<link rel="stylesheet" href="/css/site.css" />*@
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=download" />
+    @*<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=download" />*@
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body class="flex flex-col min-h-screen bg-gray-900 text-white">
     <header class="w-full border-b border-gray-700">
@@ -24,16 +25,16 @@
                 <div class="h-5 border-l border-gray-600"></div>
                 <a href="#" class="text-white font-bold">ASP.NET</a>
                 <nav class="hidden md:flex space-x-4 text-sm">
-                    <a href="#" class="px-2 py-1 rounded hover:bg-gray-800 transition">Home</a>
+                    <a href="/" class="px-2 py-1 rounded hover:bg-gray-800 transition">Home</a>
                     <a href="#" class="px-2 py-1 rounded hover:bg-gray-800 transition">Features</a>
                     <a href="#" class="px-2 py-1 rounded hover:bg-gray-800 transition">Guide</a>
-                    <a href="#" class="px-2 py-1 rounded hover:bg-gray-800 transition">My collections</a>
+                    <a href="/collections/list" class="px-2 py-1 rounded hover:bg-gray-800 transition">My collections</a>
                 </nav>
             </div>
 
             <!-- Right section -->
             <div class="flex items-center space-x-4 text-sm">
-                <a href="/collections/list" class="border border-white px-5 py-1.5 rounded text-xs hover:bg-white hover:text-black transition">COLLECT</a>
+                <a href="/collections/create" class="border border-white px-5 py-1.5 rounded text-xs hover:bg-white hover:text-black transition">COLLECT</a>
                 <button class="hover:text-gray-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z" />
