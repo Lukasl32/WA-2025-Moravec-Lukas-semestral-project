@@ -36,7 +36,7 @@ namespace Tul.WebApplications.SemesterProject.Web.Pages.User
             if (!ModelState.IsValid)
                 return Page();
 
-            var tokenHash = await Models.User.Login(user_email!, user_password!);
+            var tokenHash = await Models.UserModel.Login(user_email!, user_password!);
             if (tokenHash == null)
             {
                 ModelState.AddModelError("login_error", "Invalid login attempt.");
