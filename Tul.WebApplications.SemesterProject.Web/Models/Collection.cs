@@ -7,6 +7,7 @@ public class Collection
 {
     public Guid Id { get; set; }
     public string Title { get; set; }
+    public Guid UserId { get; set; }
     public string? Description { get; set; }
     public DateTime Created { get; set; }
 
@@ -51,6 +52,17 @@ public class Collection
         return result;
     }
 
+    public static async Task Create(Collection collection)
+    {
+        using var connection = new MySqlConnection(Program.DB);
+        await connection.OpenAsync();
+        using var command = new MySqlCommand("INSERT INTO collections(id, user_id, title, description) VALUES (@id,@userId,@title,@description)", connection);
+        command.Parameters.AddWithValue("@id", Guid.NewGuid());
+        command.Parameters.AddWithValue("@userId", collection.UserId);
+        command.Parameters.AddWithValue("@title", collection.Title);
+        command.Parameters.AddWithValue("@description", collection.Description ?? (object?)DBNull.Value);
+        await command.ExecuteScalarAsync();
+    }
     public static async Task Update(Collection collection)
     {
         using var connection = new MySqlConnection(Program.DB);
@@ -60,5 +72,14 @@ public class Collection
         command.Parameters.AddWithValue("@title", collection.Title);
         command.Parameters.AddWithValue("@description", collection.Description ?? (object?)DBNull.Value);
         await command.ExecuteScalarAsync();
+    }
+
+    public static async Task Delete(Guid collectionId)
+    {
+        using var connection = new MySqlConnection(Program.DB);
+        await connection.OpenAsync();
+        using var command = new MySqlCommand("DELETE FROM collections WHERE id = @collectionId", connection);
+        command.Parameters.AddWithValue("@collectionId", collectionId.ToString());
+        await command.ExecuteNonQueryAsync();
     }
 }

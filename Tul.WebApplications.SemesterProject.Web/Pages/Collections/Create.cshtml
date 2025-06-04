@@ -8,24 +8,24 @@
 <div class="max-w-3/4 p-6 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Create new collection:</h5>
     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Please fill in the necessary components here to create a new collection.</p>
-    <form action="/" method="post">
+    <form method="post">
         <div class="grid gap-6 mb-6 md:grid-cols-3">
             <div class="col-span-2">
                 <label for="collection_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Collection name</label>
-                <input type="text" id="collection_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="The Great collection of honers" required />
+                <input type="text" id="collection_name" name="collection_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="The Great collection of honers" required />
             </div>
             <div class="col-span-1">
                 <label for="collection_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Collection dating</label>
-                <input datepicker id="collection_date" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="09/11/2001">
+                <input datepicker id="collection_date" name="collection_date" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="09/11/2001">
             </div>
             <div class="mb-3 col-span-3">
                 <label for="collection_addressees" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Collection addressees</label>
-                <input type="text" id="collection_addressees" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="lukas.moravec@tul.cz; marek.peter@tul.cz;..." required />
+                <input type="text" id="collection_addressees" name="collection_addressees" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="lukas.moravec@tul.cz; marek.peter@tul.cz;..." required />
                 <br>Link pro kolekci bude odeslán jako z emailu: @HttpContext.Session.GetString("user_email")<br />
             </div>
             <div class="col-span-3">
                 <label for="collection_description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Collection description</label>
-                <textarea id="collection_description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write some description of collection..."></textarea>
+                <textarea id="collection_description" name="collection_description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write some description of collection..."></textarea>
             </div>
         </div>
         @*
