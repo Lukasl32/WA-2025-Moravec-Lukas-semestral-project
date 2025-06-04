@@ -4,10 +4,10 @@
 @model Tul.WebApplications.SemesterProject.Web.Pages.User.Management.IndexModel
 @{
 }
-<div>
+<div class="p-10 space-y-10 border border-gray-200 bg-gray-900 rounded-lg shadow-sm">
     <div>
-        <h2>Registered users</h2>
-        <table>
+        <h2 class="text-2xl font-semibold mb-4">Registered users</h2>
+        <table class="border border-separate p-5 table-auto">
             <thead>
                 <tr>
                     <th class="pt-5 pb-2 px-2 py-1">
@@ -32,7 +32,7 @@
                         <td class="px-2 py-1">
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>
-                        <td class="px-2 py-1 font-bold">
+                        <td class="px-2 py-1 font-semibold text-green-500">
                             @Html.DisplayFor(modelItem => item.Username)
                         </td>
                         <td class="px-2 py-1">
@@ -42,8 +42,8 @@
                             @Enum.GetName(typeof(Role), item.Role)
                         </td>
                         <td class="px-2 py-1">
-                            <a asp-page="./edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-page="./delete" asp-route-id="@item.Id">Delete</a>
+                            <a asp-page="./edit" asp-route-id="@item.Id" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Edit</a> |
+                            <a asp-page="./delete" asp-route-id="@item.Id" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded">Delete</a>
                         </td>
                     </tr>
                 }
