@@ -33,7 +33,7 @@ namespace Tul.WebApplications.SemesterProject.Web.Pages.Collections
                 Description = collection_description,
             });
 
-            return Page(); // Return the page after form submission
+            return RedirectToPage("./list"); // Return the page after form submission
         }
     }
 }
