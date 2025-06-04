@@ -17,8 +17,9 @@ public class UserModel
     public string Username { get; set; } = string.Empty;
     public required string Email { get; set; } = string.Empty;
     public string Token { get; set; } = string.Empty; // Use string for sensitive data like tokens
+    public Role Role { get; set; } = Enums.Role.Unknown;
 
-    public static async Task<UserModel> RegisterAsync(string username, string email, string password, Role role = Role.User)
+    public static async Task<UserModel> RegisterAsync(string username, string email, string password, Role role = Enums.Role.User)
     {
         using var connection = new MySqlConnection(Program.DB);
         await connection.OpenAsync();
@@ -62,6 +63,26 @@ public class UserModel
             return (await Models.Token.Generate(userId)).Hash; // Initialize string for token
         }
         return null; // Return null if user not found
+    }
+
+    public static async Task<List<UserModel>> GetAll()
+    {
+        var result = new List<UserModel>();
+        using var connection = new MySqlConnection(Program.DB);
+        await connection.OpenAsync();
+        using var command = new MySqlCommand("SELECT * FROM users ORDER BY role ASC", connection);
+        using var reader = await command.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+        {
+            result.Add(new()
+            {
+                Id = reader.GetGuid("id"),
+                Username = reader.GetString("userName"),
+                Email = reader.GetString("email"),
+                Role = (Role)reader.GetInt32("role")
+            });
+        }
+        return result;
     }
 
     public static UserModel GetById(Guid userId)

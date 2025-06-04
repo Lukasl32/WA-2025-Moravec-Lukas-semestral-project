@@ -1,12 +1,28 @@
+using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
+using Tul.WebApplications.SemesterProject.Web.Enums;
+using Tul.WebApplications.SemesterProject.Web.Models;
 
 namespace Tul.WebApplications.SemesterProject.Web.Pages.User.Management
 {
     public class IndexModel : PageModel
     {
-        public void OnGet()
+        public List<UserModel> GeneratedItems { get; set; }
+        public async Task<IActionResult> OnGet()
         {
+            var _token = HttpContext.Session.GetString("token");
+            if (string.IsNullOrEmpty(_token))
+                return RedirectToPage("/user/login"); // If the token is not set, redirect to the login page
+
+            var _userId = await Models.UserModel.GetIdByTokenAsync(_token);
+            if (_userId is null || (await UserModel.GetRoleById((Guid)_userId) is not Role.Admin))
+                return RedirectToPage("/user/login"); // If the user ID is not found, redirect to the login page
+
+            GeneratedItems = await UserModel.GetAll();
+            return Page();
         }
     }
 }
