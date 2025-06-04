@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Security;
+using System.Threading.Tasks;
 
 using Isopoh.Cryptography.Argon2;
 
@@ -85,9 +86,24 @@ public class UserModel
         return result;
     }
 
-    public static UserModel GetById(Guid userId)
+    public static async Task<UserModel> GetById(Guid userId)
     {
-        throw new NotImplementedException("GetUser logic is not implemented yet.");
+        using var connection = new MySqlConnection(Program.DB);
+        await connection.OpenAsync();
+        using var command = new MySqlCommand("SELECT * FROM users WHERE id = @id", connection);
+        command.Parameters.AddWithValue("@id", userId);
+        using var reader = await command.ExecuteReaderAsync();
+        if (await reader.ReadAsync())
+        {
+            return new UserModel
+            {
+                Id = reader.GetGuid("id"),
+                Username = reader.GetString("userName"),
+                Email = reader.GetString("email"),
+                Role = (Role)reader.GetInt32("role")
+            };
+        }
+        throw new Exception("User not found.");
     }
     
     public static Guid GetIdByEmail(string email)
@@ -115,5 +131,16 @@ public class UserModel
             return null;
 
         return (Role)Convert.ToInt32(value);
+    }
+
+    public static async Task Delete(Guid userId)
+    {
+        using var connection = new MySqlConnection(Program.DB);
+        await connection.OpenAsync();
+        using var command = new MySqlCommand("DELETE FROM users WHERE id = @id", connection);
+        command.Parameters.AddWithValue("@id", userId);
+        var result = await command.ExecuteNonQueryAsync();
+        if (result < 1)
+            throw new Exception("Failed to delete user. No rows affected");
     }
 }

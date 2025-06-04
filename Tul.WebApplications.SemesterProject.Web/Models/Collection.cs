@@ -1,4 +1,6 @@
 ﻿
+using System.Threading.Tasks;
+
 using MySqlConnector;
 
 namespace Tul.WebApplications.SemesterProject.Web.Models;
@@ -11,6 +13,43 @@ public class Collection
     public string? Description { get; set; }
     public DateTime Created { get; set; }
 
+    public static async Task<List<Collection>> GetAll()
+    {
+        var result = new List<Collection>();
+        var _userIds = new List<Guid>();
+        using var connection = new MySqlConnection(Program.DB);
+        await connection.OpenAsync();
+        using var command = new MySqlCommand("SELECT user_id FROM collections", connection);
+        using var reader = await command.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+            _userIds.Add(reader.GetGuid("user_id"));
+
+        foreach (var user in _userIds)
+            result = [.. result.Concat(await GetAllByUserId(user))];
+
+        return result;
+    }
+    internal static async Task<List<Collection>> GetAllByUserId(Guid userId)
+    {
+        var result = new List<Collection>();
+        using var connection = new MySqlConnection(Program.DB);
+        await connection.OpenAsync();
+        using var command = new MySqlCommand("SELECT * FROM collections WHERE user_id = @userId", connection);
+        command.Parameters.AddWithValue("@userId", userId.ToString());
+        using var reader = await command.ExecuteReaderAsync();
+        while (await reader.ReadAsync())
+        {
+            result.Add(new()
+            {
+                Id = reader.GetGuid("id"),
+                UserId = userId,
+                Title = reader.GetString("title"),
+                Description = await reader.IsDBNullAsync(reader.GetOrdinal("description")) ? null : reader.GetString("description"),
+                Created = reader.GetDateTime("created")
+            });
+        }
+        return result;
+    }
     public static async Task<Collection?> GetById(Guid collectionId)
     {
         using var connection = new MySqlConnection(Program.DB);
@@ -31,26 +70,6 @@ public class Collection
         return null;
     }
 
-    internal static async Task<List<Collection>> GetAllByUserId(Guid userId)
-    {
-        var result = new List<Collection>();
-        using var connection = new MySqlConnection(Program.DB);
-        await connection.OpenAsync();
-        using var command = new MySqlCommand("SELECT * FROM collections WHERE user_id = @userId", connection);
-        command.Parameters.AddWithValue("@userId", userId.ToString());
-        using var reader = await command.ExecuteReaderAsync();
-        while (await reader.ReadAsync())
-        {
-            result.Add(new()
-            {
-                Id = reader.GetGuid("id"),
-                Title = reader.GetString("title"),
-                Description = await reader.IsDBNullAsync(reader.GetOrdinal("description")) ? null : reader.GetString("description"),
-                Created = reader.GetDateTime("created")
-            });
-        }
-        return result;
-    }
 
     public static async Task Create(Collection collection)
     {
@@ -80,6 +99,8 @@ public class Collection
         await connection.OpenAsync();
         using var command = new MySqlCommand("DELETE FROM collections WHERE id = @collectionId", connection);
         command.Parameters.AddWithValue("@collectionId", collectionId.ToString());
-        await command.ExecuteNonQueryAsync();
+        var result = await command.ExecuteNonQueryAsync();
+        if(result < 1)
+            throw new InvalidOperationException("Failed to delete collection. No rows affected.");
     }
 }

@@ -5,7 +5,7 @@
 @model Tul.WebApplications.SemesterProject.Web.Pages.Collections.ListModel
 @{
 }
-<div class="bg-gray-100 py-6">
+<div class="bg-gray-100 py-6 space-y-10">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 text-gray-800 mb-4">
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Your collection</h2>
         <table class="p-15 table-auto border border-collapse border-gray-400">
@@ -30,7 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model.GeneratedItems)
+                @foreach (var item in Model.MyCollectionItems)
                 {
                     <tr>
                         <td class="px-2 py-1 font-bold">
@@ -58,6 +58,61 @@
             </tbody>
         </table>
     </div>
+    @if (Role.Admin == await UserModel.GetRoleById((Guid)await UserModel.GetIdByTokenAsync(HttpContext.Session.GetString("token")!)))
+    {
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 text-gray-800 mb-4">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Other user's collections</h2>
+            <table class="p-15 table-auto border border-collapse border-gray-400">
+                <thead>
+                    <tr>
+                        <th class="pt-4 pb-2 px-2 py-1">
+                            Title
+                        </th>
+                        <th class="pt-4 pb-2 px-2 py-1">
+                            Created
+                        </th>
+                        @if (Role.Admin == await UserModel.GetRoleById((Guid)await UserModel.GetIdByTokenAsync(HttpContext.Session.GetString("token")!)))
+                        {
+                            <th class="pt-5 pb-2 px-2 py-1">
+                                Id
+                            </th>
+                            <th class="pt-5 pb-2 px-2 py-1">
+                                Created
+                            </th>
+                        }
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.UserCollectionItems)
+                    {
+                        <tr>
+                            <td class="px-2 py-1 font-bold">
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td class="px-2 py-1">
+                                @(await UserModel.GetById(item.UserId)).Username
+                            </td>
+                            <td class="px-2 py-1">
+                                @Html.DisplayFor(modelItem => item.Created)
+                            </td>
+                            <td class="px-2 py-1">
+                                @Html.DisplayFor(modelItem => item.Id)
+                            </td>
+                            <td class="px-2 py-1">
+                                @Html.DisplayFor(modelItem => item.Created)
+                            </td>
+                            <td class="px-2 py-1">
+                                <a asp-page="./edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-page="./detail" asp-route-id="@item.Id">Details</a> |
+                                <a asp-page="./delete" asp-route-id="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 </div>
 
 @* @section Scripts {

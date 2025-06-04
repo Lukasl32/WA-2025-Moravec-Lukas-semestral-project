@@ -3,13 +3,16 @@ using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
+using Tul.WebApplications.SemesterProject.Web.Enums;
 using Tul.WebApplications.SemesterProject.Web.Models;
 
 namespace Tul.WebApplications.SemesterProject.Web.Pages.Collections
 {
     public class ListModel : PageModel
     {
-        public List<Collection> GeneratedItems { get; set; }
+        public List<Collection> MyCollectionItems { get; set; }
+
+        public List<Collection> UserCollectionItems { get; set; } = [];
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -21,9 +24,18 @@ namespace Tul.WebApplications.SemesterProject.Web.Pages.Collections
             if (_userId is null)
                 return RedirectToPage("/user/login"); // If the user ID is not found, redirect to the login page
 
-            GeneratedItems = await Collection.GetAllByUserId((Guid)_userId);
+            MyCollectionItems = await Collection.GetAllByUserId((Guid)_userId);
+
+            if (await UserModel.GetRoleById((Guid)_userId) is Role.Admin)
+                await LoadUserCollections();
 
             return Page();
+        }
+
+        internal async Task LoadUserCollections()
+        {
+            var _items = await Collection.GetAll();
+            UserCollectionItems = [.. _items.ExceptBy(MyCollectionItems.Select(item => item.Id), item => item.Id)]; // za pomocí LINQ vyøadíme z listu který nám vrátí databáze všechny itemy které jsou vlastní uživatelovi, tedy ty které jsou v MyCollectionItems
         }
     }
 }
