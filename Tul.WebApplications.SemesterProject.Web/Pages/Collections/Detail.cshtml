@@ -11,18 +11,18 @@
         <table class="p-15 table-auto border border-collapse border-gray-400">
             <thead>
                 <tr>
-                    @if (Role.Admin == await UserModel.GetRoleById((Guid)await UserModel.GetIdByTokenAsync(HttpContext.Session.GetString("token")!)))
-                    {
-                        <th class="pt-5 pb-2 px-2 py-1">
-                            Id
-                        </th>
-                    }
                     <th class="pt-4 pb-2 px-2 py-1">
                         Title
                     </th>
                     <th class="pt-4 pb-2 px-2 py-1">
                         Created
                     </th>
+                    @if (Role.Admin == await UserModel.GetRoleById((Guid)await UserModel.GetIdByTokenAsync(HttpContext.Session.GetString("token")!)))
+                    {
+                        <th class="pt-5 pb-2 px-2 py-1">
+                            Id
+                        </th>
+                    }
                     <th></th>
                 </tr>
             </thead>
@@ -30,15 +30,8 @@
                 @foreach (var item in Model.GeneratedItems)
                 {
                     <tr>
-                        <td class="px-2 py-1 font-bold">
+                        <td class="px-2 py-1 font-semibold text-green-500">
                             @Html.DisplayFor(modelItem => item.FileName)
-                        </td>
-                        <td class="px-2 py-1">
-                            @Html.DisplayFor(modelItem => item.Created)
-                        </td>
-                        <td class="px-2 py-1">
-                            <a asp-page="./edit" asp-route-id="@item.Id">Edit</a> | 
-                            <a asp-page="./delete" asp-route-id="@item.Id">Delete</a>
                         </td>
                         @if (Role.Admin == await UserModel.GetRoleById((Guid)await UserModel.GetIdByTokenAsync(HttpContext.Session.GetString("token")!)))
                         {
@@ -49,6 +42,10 @@
                                 @Html.DisplayFor(modelItem => item.Created)
                             </td>
                         }
+                        <td class="px-2 py-1">
+                            <a asp-page="./edit" asp-route-id="@item.Id" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Edit</a> |
+                            <a asp-page="./delete" asp-route-id="@item.Id" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded">Delete</a>
+                        </td>
                     </tr>
                 }
             </tbody>

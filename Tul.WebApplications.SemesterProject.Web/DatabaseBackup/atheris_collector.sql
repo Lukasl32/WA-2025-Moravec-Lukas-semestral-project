@@ -28,8 +28,8 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `collections` (
-  `id` uuid NOT NULL,
-  `user_id` uuid NOT NULL,
+  `id` varchar(64) NOT NULL,
+  `user_id` varchar(64) NOT NULL,
   `title` varchar(64) NOT NULL,
   `description` text DEFAULT NULL,
   `created` datetime NOT NULL DEFAULT current_timestamp()
@@ -53,8 +53,8 @@ INSERT INTO `collections` (`id`, `user_id`, `title`, `description`, `created`) V
 --
 
 CREATE TABLE `pictures` (
-  `id` uuid NOT NULL DEFAULT uuid(),
-  `collection_id` uuid NOT NULL,
+  `id` varchar(64) NOT NULL,
+  `collection_id` varchar(64) NOT NULL,
   `fileName` varchar(128) NOT NULL,
   `path` text NOT NULL DEFAULT '/',
   `created` datetime NOT NULL DEFAULT current_timestamp()
@@ -78,9 +78,9 @@ INSERT INTO `pictures` (`id`, `collection_id`, `fileName`, `path`, `created`) VA
 --
 
 CREATE TABLE `tokens` (
-  `id` uuid NOT NULL,
+  `id` varchar(64) NOT NULL,
   `hash` varchar(256) NOT NULL,
-  `user_id` uuid NOT NULL,
+  `user_id` varchar(64) NOT NULL,
   `created` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_czech_ci;
 
@@ -144,7 +144,7 @@ INSERT INTO `tokens` (`id`, `hash`, `user_id`, `created`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` uuid NOT NULL DEFAULT uuid(),
+  `id` varchar(64) NOT NULL,
   `userName` varchar(64) NOT NULL,
   `email` varchar(256) NOT NULL,
   `passwordHash` text NOT NULL,
