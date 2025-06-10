@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          :root {
+            --bg: #1e90ff;
+            --fg: pink;
+          }
+
+          * {
+            box-sizing: border-box;
+            font-family: sans-serif;
+            text-align: center;
+          }
+          
+          body {
+            background: var(--bg);
+            padding: 20px;
+          }
+          
+          .grid-container {
+            display: grid;
+            grid-template-rows: auto 1fr auto;  /* header, content, footer */
+            grid-template-columns: 150px 1fr 150px;
+            grid-template-areas:
+              "header header header"
+              "sidebar1 main sidebar2"
+              "footer footer footer";
+            gap: 20px;
+          }
+          
+          header {
+            grid-area: header;
+            background: var(--fg);
+            padding: 20px;
+          }
+          
+          main {
+            grid-area: main;
+            height: 34vw;
+            background: var(--fg);
+            padding: 20px;
+          }
+          
+          .sidebar1 {
+            grid-area: sidebar1;
+            background: var(--fg);
+            padding: 20px;
+          }
+          
+          .sidebar2 {
+            grid-area: sidebar2;
+            background: var(--fg);
+            padding: 20px;
+          }
+          
+          footer {
+            grid-area: footer;
+            background: var(--fg);
+            padding: 20px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="grid-container">
+          <header>header</header>    
+          <aside class="sidebar1">sidebar 1</aside>
+          <main>main</main>
+          <aside class="sidebar2">sidebar 2</aside>  
+          <footer>footer</footer>
+      </div>
+    </body>
+  </html>

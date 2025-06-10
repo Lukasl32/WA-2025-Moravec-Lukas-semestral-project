@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+        :root {
+          --bg: #1e90ff;
+          --fg: pink;
+        }
+
+        * {
+          box-sizing: border-box;
+          font-family: sans-serif;
+          text-align: center;
+        }
+        
+        body {
+          background: var(--bg);
+          padding: 20px;
+        }
+        
+        .container {
+          display: flex;
+          flex-direction: column;
+        }
+        
+        header {
+          background: var(--fg);
+          padding: 20px;
+          margin-bottom: 20px;
+        }
+        
+        .content {
+          display: flex;
+          gap: 20px;
+        }
+        
+        .sidebar {
+          background: var(--fg);
+          padding: 20px;
+          width: 150px;
+        }
+        
+        main {
+          background: var(--fg);
+          height: 36vw;
+          padding: 20px;
+          flex: 1;
+        }
+        
+        footer {
+          background: var(--fg);
+          padding: 20px;
+          margin-top: 20px;
+        }
+      </style>
+    </head>
+    <body>
+        <div class="page-wrapper">
+        <header>header</header>
+            <div class="content">
+              <aside class="sidebar">sidebar 1</aside>
+              <main>main</main>
+              <aside class="sidebar">sidebar 2</aside>
+            </div>
+          <footer>footer</footer>
+      </div>
+    </body>
+</html>
